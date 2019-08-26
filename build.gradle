@@ -16,9 +16,9 @@ def final HTTP_PORT = System.getenv('PORT') ? System.getenv('PORT').toInteger() 
 def portOffset = 0
 
 tomcatRun {
-	httpPort = HTTP_PORT + portOffset
-	ajpPort = 8009 + portOffset
-	stopPort = 8081 + portOffset
+    httpPort = HTTP_PORT + portOffset
+    ajpPort = 8009 + portOffset
+    stopPort = 8081 + portOffset
     contextPath = '/'
 }
 
@@ -44,7 +44,7 @@ dependencies {
     providedCompile "org.apache.tomcat:tomcat-servlet-api:${tomcatVersion}"
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+        "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
     tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
         exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
     }
