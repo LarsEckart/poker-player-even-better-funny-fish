@@ -2,7 +2,6 @@
 
 JAVA_OPTS="$JAVA_OPTS -Xmx248m"
 JAVA_OPTS="$JAVA_OPTS -XX:-UseGCOverheadLimit"
-JAVA_OPTS="$JAVA_OPTS -XX:+CMSClassUnloadingEnabled"
 JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
 JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedClassPointers"
 
