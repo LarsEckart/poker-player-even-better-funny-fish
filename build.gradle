@@ -1,51 +1,40 @@
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'com.bmuschko.tomcat'
+plugins {
+    id 'java'
+    id 'application'
+}
 
-sourceCompatibility = 1.11
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 version = '1.0'
 
 repositories {
     mavenCentral()
 }
 
-def final HTTP_PORT = System.getenv('PORT') ? System.getenv('PORT').toInteger() : 8080
-
-// change this by n*100 to offset the ports of the tomcat server
-// don't forget to change the port accordingly in config.yml too!
-def portOffset = 0
-
-tomcatRun {
-    httpPort = HTTP_PORT + portOffset
-    ajpPort = 8009 + portOffset
-    stopPort = 8081 + portOffset
-    contextPath = '/'
-}
-
-tomcatStop {
-    stopPort = 8081 + portOffset
-    stopKey = 'stopKey'
-}
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
-    }
+application {
+    mainClass = 'org.leanpoker.player.Application'
 }
 
 dependencies {
-    def tomcatVersion = '7.0.76'
+    implementation("org.slf4j:slf4j-simple:2.0.0-alpha1")
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("org.eclipse.jetty:jetty-server:11.0.6")
+    implementation("org.eclipse.jetty:jetty-servlet:11.0.6")
 
-    compile 'com.google.code.gson:gson:2.2.4'
-    providedCompile "org.apache.tomcat:tomcat-servlet-api:${tomcatVersion}"
+    testImplementation(platform("org.junit:junit-bom:5.8.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.assertj:assertj-core:3.22.0")
+    testImplementation("com.approvaltests:approvaltests:13.4.0")
+    testImplementation("org.mockito:mockito-core:4.3.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.3.1")
+}
 
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+test {
+    useJUnitPlatform()
 }
 
 task stage(dependsOn: [assemble])

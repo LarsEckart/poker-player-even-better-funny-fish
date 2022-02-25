@@ -1,1 +1,1 @@
-web: ./gradlew tomcatRun
+web: ./gradlew run
