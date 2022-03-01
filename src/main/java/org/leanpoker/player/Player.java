@@ -10,7 +10,7 @@ import com.google.gson.JsonSyntaxException;
 
 public class Player {
 
-    static final String VERSION = "Default Java folding player";
+    static final String VERSION = "Still fishy";
 
     public static int betRequest(JsonElement request) {
         try {
