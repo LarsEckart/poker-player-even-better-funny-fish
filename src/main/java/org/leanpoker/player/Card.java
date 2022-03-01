@@ -9,6 +9,10 @@ public class Card {
         return rank;
     }
 
+    public int getRankAsInt() {
+        return Integer.parseInt(rank);
+    }
+
     public void setRank(String value) {
         this.rank = value;
     }
