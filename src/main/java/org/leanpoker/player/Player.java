@@ -24,10 +24,13 @@ public class Player {
 
             // current_buy_in - players[in_action][bet] + minimum_raise
             var result = ourPlayer.getBet() + gameState.getMinimumRaise();
-            long stack = ourPlayer.getStack()/3;
+            long maxBet = ourPlayer.getStack()/3;
 
-            if (result > stack) {
-                result = Math.toIntExact(stack);
+            // if we have 1 pair we increase our bet up to the maximum
+            long bet = new PlayerStrategy().increaseBetIfWeGetPair(Arrays.asList(ourPlayer.getHoleCards()), Arrays.asList(gameState.getCommunityCards()));
+
+            if (result > maxBet) {
+                result = Math.toIntExact(maxBet);
             }
 
             return Math.toIntExact(result);
