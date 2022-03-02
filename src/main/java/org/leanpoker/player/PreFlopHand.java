@@ -34,4 +34,25 @@ class PreFlopHand {
             default -> higherCard.getRankAsInt() / 2.0;
         };
     }
+
+    public boolean isPair() {
+        return higherCard.getRank().equals(lowerCard.getRank());
+    }
+
+    public boolean isSuited() {
+        return higherCard.getSuit().equals(lowerCard.getSuit());
+    }
+
+    public int gap() {
+        return higherCard.getRankAsInt() - lowerCard.getRankAsInt() - 1;
+    }
+
+    public int gapValue() {
+        if (gap() <= 2) {
+            return -gap();
+        } else if (gap() == 3) {
+            return -4;
+        } else
+            return -5;
+    }
 }
