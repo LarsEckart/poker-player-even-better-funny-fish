@@ -20,7 +20,6 @@ public class Player {
             GameState gameState = gson.fromJson(request.toString(), GameState.class);
 
 
-
             PlayerDto ourPlayer = Arrays.stream(gameState.getPlayers()).filter(p -> p.getID() == gameState.getInAction()).findFirst().get();
 
             // current_buy_in - players[in_action][bet] + minimum_raise

@@ -10,27 +10,27 @@ class CardTest {
     void king() {
         Card king = new Card();
         king.setRank("K");
-        assertThat(king.getRankAsInt()).isEqualTo(14);
+        assertThat(king.getRankAsInt()).isEqualTo(13);
     }
 
     @Test
     void queen() {
         Card king = new Card();
         king.setRank("Q");
-        assertThat(king.getRankAsInt()).isEqualTo(13);
+        assertThat(king.getRankAsInt()).isEqualTo(12);
     }
 
     @Test
     void jack() {
         Card king = new Card();
         king.setRank("J");
-        assertThat(king.getRankAsInt()).isEqualTo(12);
+        assertThat(king.getRankAsInt()).isEqualTo(11);
     }
 
     @Test
     void ace() {
         Card king = new Card();
-        king.setRank("J");
-        assertThat(king.getRankAsInt()).isEqualTo(11);
+        king.setRank("A");
+        assertThat(king.getRankAsInt()).isEqualTo(14);
     }
 }
