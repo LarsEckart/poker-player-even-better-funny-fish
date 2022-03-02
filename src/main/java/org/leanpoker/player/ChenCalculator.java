@@ -5,16 +5,23 @@ import java.util.List;
 public class ChenCalculator {
 
     public static int calculate(List<Card> cards) {
-        int result = 0;
+        double result = 0.0;
         PreFlopHand preFlopHand = new PreFlopHand(cards);
 
-        double halfRank = preFlopHand.getHigherCard().getRankAsInt() / 2.0;
-        if (preFlopHand.getHigherCard().getSuit().equals(preFlopHand.getLowerCard().getSuit())) {
+        result += preFlopHand.scoreHighestCard();
+        if (preFlopHand.isPair()) {
+            result = result * 2;
+        }
+        if (preFlopHand.isSuited()) {
             result += 2;
         }
-        int i = (int) Math.ceil(halfRank);
-        result = result + i;
-        return result;
+
+        result = result + preFlopHand.gapValue();
+
+        result += preFlopHand.bonusPoint();
+
+        long roundedUp = Math.round(result);
+        return Math.toIntExact(roundedUp);
     }
 
 }

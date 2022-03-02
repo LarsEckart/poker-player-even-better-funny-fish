@@ -44,6 +44,10 @@ class PreFlopHand {
     }
 
     public int gap() {
+        if (higherCard.getRank().equals(lowerCard.getRank())) {
+            return 0;
+        }
+
         return higherCard.getRankAsInt() - lowerCard.getRankAsInt() - 1;
     }
 
@@ -57,6 +61,9 @@ class PreFlopHand {
     }
 
     public int bonusPoint() {
+        if (isPair()) {
+            return 0;
+        }
         if ((gap() == 0 || gap() == 1) && higherCard.getRankAsInt() < 12) {
             return 1;
         }
