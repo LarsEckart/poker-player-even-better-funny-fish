@@ -27,6 +27,10 @@ public class PlayerStrategy {
         List<Integer> numPairs = rankCount.values().stream().filter(count -> count == 2).collect(Collectors.toList());
         return numPairs.size() >= 1;
     }
+    private boolean doWeHave4OfAKind(Map<String, Integer> rankCount) {
+        List<Integer> numPairs = rankCount.values().stream().filter(count -> count == 4).collect(Collectors.toList());
+        return numPairs.size() >= 1;
+    }
 
     private Map<String, Integer> getRankCount(List<Card> combinedCards) {
         Map<String, Integer> rankCount = new HashMap<>();
