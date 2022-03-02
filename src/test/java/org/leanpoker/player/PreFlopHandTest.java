@@ -179,4 +179,49 @@ class PreFlopHandTest {
 
         assertThat(result).isEqualTo(-5);
     }
+
+    @Test
+    void bonusPoint() {
+        PreFlopHand preFlopHand = new PreFlopHand(List.of(new Card("5", "Heart"), new Card("7", "Clubs")));
+
+        int result = preFlopHand.bonusPoint();
+
+        assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    void bonusPoint1() {
+        PreFlopHand preFlopHand = new PreFlopHand(List.of(new Card("J", "Heart"), new Card("10", "Clubs")));
+
+        int result = preFlopHand.bonusPoint();
+
+        assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    void bonusPointWhenHigherThanQueen() {
+        PreFlopHand preFlopHand = new PreFlopHand(List.of(new Card("Q", "Heart"), new Card("A", "Clubs")));
+
+        int result = preFlopHand.bonusPoint();
+
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
+    void noBonusPointWhenGapLargerThan1() {
+        PreFlopHand preFlopHand = new PreFlopHand(List.of(new Card("2", "Heart"), new Card("5", "Clubs")));
+
+        int result = preFlopHand.bonusPoint();
+
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
+    void bonusPointWhenHigherThanQueen2() {
+        PreFlopHand preFlopHand = new PreFlopHand(List.of(new Card("Q", "Heart"), new Card("10", "Clubs")));
+
+        int result = preFlopHand.bonusPoint();
+
+        assertThat(result).isEqualTo(0);
+    }
 }

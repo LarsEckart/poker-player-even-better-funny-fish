@@ -55,4 +55,11 @@ class PreFlopHand {
         } else
             return -5;
     }
+
+    public int bonusPoint() {
+        if ((gap() == 0 || gap() == 1) && higherCard.getRankAsInt() < 12) {
+            return 1;
+        }
+        return 0;
+    }
 }
