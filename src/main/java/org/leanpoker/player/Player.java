@@ -24,8 +24,12 @@ public class Player {
 
             // current_buy_in - players[in_action][bet] + minimum_raise
             var result = ourPlayer.getBet() + gameState.getMinimumRaise();
+            long stack = ourPlayer.getStack()/3;
 
-            // TODO: set a max ?
+            if (result > stack) {
+                result = Math.toIntExact(stack);
+            }
+
             return Math.toIntExact(result);
         } catch (Exception e) {
             return 100;
