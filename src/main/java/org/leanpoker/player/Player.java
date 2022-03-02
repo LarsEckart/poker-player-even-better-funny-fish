@@ -23,17 +23,20 @@ public class Player {
             PlayerDto ourPlayer = Arrays.stream(gameState.getPlayers()).filter(p -> p.getID() == gameState.getInAction()).findFirst().get();
 
             // current_buy_in - players[in_action][bet] + minimum_raise
-            var result = ourPlayer.getBet() + gameState.getMinimumRaise();
+            var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
             long maxBet = ourPlayer.getStack()/3;
 
             // if we have 1 pair we increase our bet up to the maximum
-            long bet = new PlayerStrategy().increaseBetIfWeGetPair(Arrays.asList(ourPlayer.getHoleCards()), Arrays.asList(gameState.getCommunityCards()));
+            long bet = new PlayerStrategy().increaseBetIfWeGetPair(Arrays.asList(ourPlayer.getHoleCards()),
+                    Arrays.asList(gameState.getCommunityCards()));
+            currentBuyIn += bet;
 
-            if (result > maxBet) {
-                result = Math.toIntExact(maxBet);
+
+            if (currentBuyIn > maxBet) {
+                currentBuyIn = Math.toIntExact(maxBet);
             }
 
-            return Math.toIntExact(result);
+            return Math.toIntExact(currentBuyIn);
         } catch (Exception e) {
             return 100;
         }
