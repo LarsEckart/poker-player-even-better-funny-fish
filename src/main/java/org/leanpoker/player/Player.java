@@ -21,25 +21,37 @@ public class Player {
 
             PlayerDto ourPlayer = Arrays.stream(gameState.getPlayers()).filter(p -> p.getID() == gameState.getInAction()).findFirst().get();
 
-            // current_buy_in - players[in_action][bet] + minimum_raise
-            var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
-            long maxBet = ourPlayer.getStack()/3;
-
-            // if we have 1 pair we increase our bet up to the maximum
-            long bet = new PlayerStrategy().increaseBetIfWeGetPair(
-                    ourPlayer.pocketCardsAsList(),
-                    Arrays.asList(gameState.getCommunityCards()));
-            currentBuyIn += bet;
-
-
-            if (currentBuyIn > maxBet) {
-                currentBuyIn = Math.toIntExact(maxBet);
+            if (Arrays.asList(gameState.getCommunityCards()).isEmpty()) {
+                int chenValue = ourPlayer.pocketCards().chenFormula();
+                if (chenValue >= 9) {
+                    return bet(gameState, ourPlayer);
+                } else {
+                    return 0;
+                }
             }
 
-            return Math.toIntExact(currentBuyIn);
+            // current_buy_in - players[in_action][bet] + minimum_raise
+            return bet(gameState, ourPlayer);
         } catch (Exception e) {
             return 100;
         }
+    }
+
+    private static int bet(GameState gameState, PlayerDto ourPlayer) {
+        var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
+        long maxBet = ourPlayer.getStack()/3;
+
+        // if we have 1 pair we increase our bet up to the maximum
+        long bet = new PlayerStrategy().increaseBetIfWeGetPair(
+                ourPlayer.pocketCardsAsList(),
+                Arrays.asList(gameState.getCommunityCards()));
+        currentBuyIn += bet;
+
+        if (currentBuyIn > maxBet) {
+            currentBuyIn = Math.toIntExact(maxBet);
+        }
+
+        return Math.toIntExact(currentBuyIn);
     }
 
     public static void showdown(JsonElement game) {
