@@ -14,6 +14,10 @@ public class GameState {
     private PlayerDto[] players;
     private Card[] communityCards;
 
+    public PlayerDto getOurPlayer() {
+        return Arrays.stream(getPlayers()).filter(p -> p.getID() == getInAction()).findFirst().get();
+    }
+
     boolean isPreFlop() {
         return Arrays.asList(getCommunityCards()).isEmpty();
     }

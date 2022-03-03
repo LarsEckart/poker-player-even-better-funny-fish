@@ -8,6 +8,18 @@ import java.util.Map;
 
 public class PlayerStrategy {
 
+    int doSomething(GameState gameState, PlayerDto ourPlayer) {
+        if (gameState.isPreFlop()) {
+            int chenValue = ourPlayer.chenFormula();
+            if (chenValue >= 9) {
+                return bet(gameState, ourPlayer);
+            } else {
+                return 0;
+            }
+        }
+        return bet(gameState, ourPlayer);
+    }
+
     int bet(GameState gameState, PlayerDto ourPlayer) {
         var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
         long maxBet = ourPlayer.getStack()/3;

@@ -21,6 +21,10 @@ public class PlayerDto {
         return new PocketCards(Arrays.asList(getHoleCards()));
     }
 
+    public int chenFormula() {
+        return pocketCards().chenFormula();
+    }
+
     public long getID() {
         return id;
     }
