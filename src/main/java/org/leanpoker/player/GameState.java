@@ -1,5 +1,7 @@
 package org.leanpoker.player;
 
+import java.util.Arrays;
+
 public class GameState {
 
     private long betIndex;
@@ -11,6 +13,10 @@ public class GameState {
     private long inAction;
     private PlayerDto[] players;
     private Card[] communityCards;
+
+    boolean isPreFlop() {
+        return Arrays.asList(getCommunityCards()).isEmpty();
+    }
 
     public long getBetIndex() {
         return betIndex;
