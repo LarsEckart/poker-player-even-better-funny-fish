@@ -2,6 +2,8 @@ package org.leanpoker.player;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+
 import com.google.gson.JsonParser;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -9,8 +11,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @WebServlet("/")
 public class PlayerServlet extends HttpServlet {
+
+    private static final Logger log = getLogger(PlayerServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -22,10 +28,14 @@ public class PlayerServlet extends HttpServlet {
         if (req.getParameter("action").equals("bet_request")) {
             String gameState = req.getParameter("game_state");
 
+            log.info("bet_request: {}", gameState);
+
             resp.getWriter().print(Player.betRequest(JsonParser.parseString(gameState)));
         }
         if (req.getParameter("action").equals("showdown")) {
             String gameState = req.getParameter("game_state");
+
+            log.info("showdown: {}", gameState);
 
             Player.showdown(JsonParser.parseString(gameState));
         }

@@ -1,31 +1,28 @@
 package org.leanpoker.player;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
+import org.slf4j.Logger;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class RankingService {
 
+    private static final Logger log = getLogger(RankingService.class);
+
     public static final String URL_2 = "http://rainman.leanpoker.org/rank";
+    private final HttpClient httpClient = HttpClient.newBuilder().build();
 
     public int call(List<Card> cards) {
         try {
-
-            HttpClient httpClient = HttpClient.newBuilder().build();
 
             String cardsString = cards.stream()
                     .map(c -> "{\"rank\":\"%s\",\"suit\":\"%s\"}".formatted(c.getRank(), c.getSuit()))
@@ -50,12 +47,10 @@ public class RankingService {
             String rank = jsonElement.getAsJsonObject().get("rank").getAsString();
 
             return Integer.parseInt(rank);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return 0;
         }
     }
-
 
 }
