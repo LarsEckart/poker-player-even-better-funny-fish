@@ -32,7 +32,7 @@ public class PlayerStrategy {
 
     int bet(GameState gameState, PlayerDto ourPlayer) {
         var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
-        long maxBet = ourPlayer.getStack()/3;
+        long maxBet = ourPlayer.getStack() / 3;
         List<Card> combinedCards = allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards()));
 
         if (doWeHave4OfAKind(getRankCount(combinedCards))) {
@@ -57,15 +57,16 @@ public class PlayerStrategy {
     }
 
     public long increaseBetIfWeGetPair(List<Card> holeCards, List<Card> communityCards, List<Card> combinedCards) {
-        System.err.println("PlayerStrategy.increaseBetIfWeGetPair, holeCards = " + holeCards+", communityCards = " + communityCards);
+        System.err.println("PlayerStrategy.increaseBetIfWeGetPair, holeCards = " + holeCards + ", communityCards = " + communityCards);
         Map<String, Integer> rankCount = getRankCount(combinedCards);
         System.err.println("rankCounts = " + rankCount);
         boolean isTherePairs = doWeHavePairs(rankCount);
         // [{"K", "spades"},{"K", "clubs"}] => {"K": 2}
         // count the number of ranks has the rank
         // make the map where the rank is key
-        if (isTherePairs)
+        if (isTherePairs) {
             return 100;
+        }
         return 0;
     }
 
@@ -79,15 +80,16 @@ public class PlayerStrategy {
     private boolean doWeHavePairs(Map<String, Integer> rankCount) {
         return rankCount.values().stream().anyMatch(count -> count == 2);
     }
+
     private boolean doWeHave4OfAKind(Map<String, Integer> rankCount) {
         return rankCount.values().stream().anyMatch(count -> count == 4);
     }
 
     private Map<String, Integer> getRankCount(List<Card> combinedCards) {
         Map<String, Integer> rankCount = new HashMap<>();
-        for (Card card: combinedCards) {
+        for (Card card : combinedCards) {
             String rank = card.getRank();
-            if(rankCount.containsKey(rank)) {
+            if (rankCount.containsKey(rank)) {
                 rankCount.put(rank, rankCount.get(rank) + 1);
             } else {
                 rankCount.put(rank, 1);

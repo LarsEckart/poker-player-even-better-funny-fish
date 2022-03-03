@@ -68,8 +68,9 @@ class PocketCards {
             return -gap();
         } else if (gap() == 3) {
             return -4;
-        } else
+        } else {
             return -5;
+        }
     }
 
     public int bonusPoint() {
