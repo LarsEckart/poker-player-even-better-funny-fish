@@ -1,5 +1,8 @@
 package org.leanpoker.player;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class PlayerDto {
 
     private long id;
@@ -9,6 +12,14 @@ public class PlayerDto {
     private long stack;
     private long bet;
     private Card[] holeCards;
+
+    public List<Card> pocketCardsAsList() {
+        return Arrays.asList(getHoleCards());
+    }
+
+    public PocketCards pocketCards() {
+        return new PocketCards(Arrays.asList(getHoleCards()));
+    }
 
     public long getID() {
         return id;

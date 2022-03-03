@@ -6,7 +6,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonSyntaxException;
 
 public class Player {
 
@@ -27,7 +26,8 @@ public class Player {
             long maxBet = ourPlayer.getStack()/3;
 
             // if we have 1 pair we increase our bet up to the maximum
-            long bet = new PlayerStrategy().increaseBetIfWeGetPair(Arrays.asList(ourPlayer.getHoleCards()),
+            long bet = new PlayerStrategy().increaseBetIfWeGetPair(
+                    ourPlayer.pocketCardsAsList(),
                     Arrays.asList(gameState.getCommunityCards()));
             currentBuyIn += bet;
 
