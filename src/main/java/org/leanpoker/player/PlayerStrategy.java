@@ -6,17 +6,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class PlayerStrategy {
 
-    int doSomething(GameState gameState, PlayerDto ourPlayer) {
+    private static final Logger log = getLogger(PlayerStrategy.class);
+
+    int doSomething(GameState gameState) {
+        PlayerDto ourPlayer = gameState.getOurPlayer();
         if (gameState.isPreFlop()) {
             int chenValue = ourPlayer.chenFormula();
             if (chenValue >= 9) {
                 return bet(gameState, ourPlayer);
             } else {
-                return 0;
+                return fold();
             }
         }
+        RankingService rankingService = new RankingService();
+        int call = rankingService.call(allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards())));
+        log.info("rank {}", call);
         return bet(gameState, ourPlayer);
     }
 
@@ -40,6 +50,10 @@ public class PlayerStrategy {
         }
 
         return Math.toIntExact(currentBuyIn);
+    }
+
+    private int fold() {
+        return 0;
     }
 
     public long increaseBetIfWeGetPair(List<Card> holeCards, List<Card> communityCards, List<Card> combinedCards) {

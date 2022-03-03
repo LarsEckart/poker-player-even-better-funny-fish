@@ -7,19 +7,17 @@ import com.google.gson.JsonElement;
 
 public class Player {
 
+    private static final Gson GSON = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
     static final String VERSION = "Smart fish?";
 
     public static int betRequest(JsonElement request) {
         try {
-            Gson gson = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
-            GameState gameState = gson.fromJson(request.toString(), GameState.class);
-
-            PlayerDto ourPlayer = gameState.getOurPlayer();
+            GameState gameState = GSON.fromJson(request.toString(), GameState.class);
 
             PlayerStrategy playerStrategy = new PlayerStrategy();
-            return playerStrategy.doSomething(gameState, ourPlayer);
+            return playerStrategy.doSomething(gameState);
         } catch (Exception e) {
             return 100;
         }
