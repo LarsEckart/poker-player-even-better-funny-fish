@@ -2,12 +2,12 @@ package org.leanpoker.player;
 
 import java.util.List;
 
-class PreFlopHand {
+class PocketCards {
 
-    Card higherCard;
-    Card lowerCard;
+    private final Card higherCard;
+    private final Card lowerCard;
 
-    public PreFlopHand(List<Card> cards) {
+    public PocketCards(List<Card> cards) {
         if (cards.get(0).getRankAsInt() > cards.get(1).getRankAsInt()) {
             higherCard = cards.get(0);
             lowerCard = cards.get(1);
@@ -17,12 +17,24 @@ class PreFlopHand {
         }
     }
 
-    public Card getHigherCard() {
-        return higherCard;
-    }
+    public int chenFormula() {
+        double result = 0.0;
 
-    public Card getLowerCard() {
-        return lowerCard;
+        result += scoreHighestCard();
+
+        if (isPair()) {
+            result = result * 2;
+        }
+
+        if (isSuited()) {
+            result += 2;
+        }
+
+        result = result + gapValue();
+
+        result += bonusPoint();
+
+        return Math.toIntExact(Math.round(result));
     }
 
     public double scoreHighestCard() {
