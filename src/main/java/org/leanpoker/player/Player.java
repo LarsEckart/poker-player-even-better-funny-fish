@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
 
 public class Player {
 
-    static final String VERSION = "Still fishy";
+    static final String VERSION = "Smart fish?";
 
     public static int betRequest(JsonElement request) {
         try {
