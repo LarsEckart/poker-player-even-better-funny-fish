@@ -47,6 +47,9 @@ public class PlayerStrategy {
         if (doWeHaveTwoPair(getRankCount(combinedCards))) {
             return Math.toIntExact(currentBuyIn + 150);
         }
+        if (doWeHaveFullHousePair(getRankCount(combinedCards))) {
+            return Math.toIntExact(currentBuyIn + maxBet);
+        }
         // if we have 1 pair we increase our bet up to the maximum
         long bet = increaseBetIfWeGetPair(
                 ourPlayer.pocketCardsAsList(),
@@ -92,6 +95,11 @@ public class PlayerStrategy {
 
     private boolean doWeHaveTwoPair(Map<String, Integer> rankCount) {
         return rankCount.values().stream().filter(count -> count == 2).count() == 2;
+    }
+
+    private boolean doWeHaveFullHousePair(Map<String, Integer> rankCount) {
+        return rankCount.values().stream().anyMatch(count -> count == 2)
+                && rankCount.values().stream().anyMatch(count -> count == 3);
     }
 
     private boolean doWeHaveThreeOfAKind(Map<String, Integer> rankCount) {
