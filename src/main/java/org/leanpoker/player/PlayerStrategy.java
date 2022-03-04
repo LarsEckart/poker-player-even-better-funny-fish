@@ -18,6 +18,7 @@ public class PlayerStrategy {
         PlayerDto ourPlayer = gameState.getOurPlayer();
         if (gameState.isPreFlop()) {
             int chenValue = ourPlayer.chenFormula();
+            log.info("chen value: {}", chenValue);
             if (chenValue >= 9) {
                 var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
                 return Math.toIntExact(currentBuyIn + 20);
