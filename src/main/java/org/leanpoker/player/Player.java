@@ -10,7 +10,7 @@ public class Player {
     private static final Gson GSON = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create();
-    static final String VERSION = "Recovering fish?";
+    static final String VERSION = "actually folding fish!";
 
     public static int betRequest(JsonElement request) {
         try {
