@@ -39,6 +39,7 @@ public class PlayerStrategy {
         var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
         long maxBet = ourPlayer.getStack() / 3;
         List<Card> combinedCards = allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards()));
+        log.info("combined cards: {}", combinedCards);
 
         if (doWeHave4OfAKind(getRankCount(combinedCards))) {
             return Math.toIntExact(ourPlayer.getStack());
