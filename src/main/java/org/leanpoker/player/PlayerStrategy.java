@@ -24,9 +24,12 @@ public class PlayerStrategy {
                 return fold();
             }
         }
-        RankingService rankingService = new RankingService();
-        int call = rankingService.call(allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards())));
-        log.info("rank {}", call);
+        new Thread(() -> {
+            RankingService rankingService = new RankingService();
+            int call = rankingService.call(allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards())));
+            log.info("rank {}", call);
+        }).start();
+
         return bet(gameState, ourPlayer);
     }
 
