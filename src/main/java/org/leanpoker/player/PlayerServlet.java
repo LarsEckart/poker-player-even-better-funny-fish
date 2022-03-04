@@ -30,7 +30,9 @@ public class PlayerServlet extends HttpServlet {
 
             log.info("bet_request: {}", gameState);
 
-            resp.getWriter().print(Player.betRequest(JsonParser.parseString(gameState)));
+            int bet = Player.betRequest(JsonParser.parseString(gameState));
+            log.info("we bet {}", bet);
+            resp.getWriter().print(bet);
         }
         if (req.getParameter("action").equals("showdown")) {
             String gameState = req.getParameter("game_state");
