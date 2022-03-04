@@ -19,7 +19,8 @@ public class PlayerStrategy {
         if (gameState.isPreFlop()) {
             int chenValue = ourPlayer.chenFormula();
             if (chenValue >= 9) {
-                return bet(gameState, ourPlayer);
+                var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
+                return Math.toIntExact(currentBuyIn + 20);
             } else {
                 return fold();
             }
