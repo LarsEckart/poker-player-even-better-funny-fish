@@ -38,6 +38,9 @@ public class PlayerStrategy {
         if (doWeHave4OfAKind(getRankCount(combinedCards))) {
             return Math.toIntExact(ourPlayer.getStack());
         }
+        if (doWeHaveThreeOfAKind(getRankCount(combinedCards))) {
+            return Math.toIntExact(currentBuyIn + 200);
+        }
         // if we have 1 pair we increase our bet up to the maximum
         long bet = increaseBetIfWeGetPair(
                 ourPlayer.pocketCardsAsList(),
@@ -79,6 +82,10 @@ public class PlayerStrategy {
 
     private boolean doWeHavePairs(Map<String, Integer> rankCount) {
         return rankCount.values().stream().anyMatch(count -> count == 2);
+    }
+
+    private boolean doWeHaveThreeOfAKind(Map<String, Integer> rankCount) {
+        return rankCount.values().stream().anyMatch(count -> count == 3);
     }
 
     private boolean doWeHave4OfAKind(Map<String, Integer> rankCount) {
