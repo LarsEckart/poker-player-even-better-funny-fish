@@ -21,6 +21,9 @@ public class PlayerStrategy {
             log.info("chen value: {}", chenValue);
             if (chenValue >= 8) {
                 var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
+                if (ourPlayer.getBet() > 200) {
+                    fold();
+                }
                 return Math.toIntExact(currentBuyIn + 20);
             } else {
                 return fold();
