@@ -41,14 +41,17 @@ public class PlayerStrategy {
         if (doWeHave4OfAKind(getRankCount(combinedCards))) {
             return Math.toIntExact(ourPlayer.getStack());
         }
+        if (doWeHaveFullHousePair(getRankCount(combinedCards))) {
+            return Math.toIntExact(currentBuyIn + maxBet);
+        }
+        if (flush(getSuitCount(combinedCards))) {
+            return Math.toIntExact(currentBuyIn + maxBet);
+        }
         if (doWeHaveThreeOfAKind(getRankCount(combinedCards))) {
             return Math.toIntExact(currentBuyIn + 200);
         }
         if (doWeHaveTwoPair(getRankCount(combinedCards))) {
             return Math.toIntExact(currentBuyIn + 150);
-        }
-        if (doWeHaveFullHousePair(getRankCount(combinedCards))) {
-            return Math.toIntExact(currentBuyIn + maxBet);
         }
         // if we have 1 pair we increase our bet up to the maximum
         long bet = increaseBetIfWeGetPair(
@@ -89,6 +92,10 @@ public class PlayerStrategy {
         return combinedCards;
     }
 
+    private boolean flush(Map<String, Integer> suitCount) {
+        return suitCount.values().stream().anyMatch(count -> count >= 5);
+    }
+
     private boolean doWeHaveOnePair(Map<String, Integer> rankCount) {
         return rankCount.values().stream().anyMatch(count -> count == 2);
     }
@@ -118,6 +125,19 @@ public class PlayerStrategy {
                 rankCount.put(rank, rankCount.get(rank) + 1);
             } else {
                 rankCount.put(rank, 1);
+            }
+        }
+        return rankCount;
+    }
+
+    private Map<String, Integer> getSuitCount(List<Card> combinedCards) {
+        Map<String, Integer> rankCount = new HashMap<>();
+        for (Card card : combinedCards) {
+            String suit = card.getSuit();
+            if (rankCount.containsKey(suit)) {
+                rankCount.put(suit, rankCount.get(suit) + 1);
+            } else {
+                rankCount.put(suit, 1);
             }
         }
         return rankCount;
