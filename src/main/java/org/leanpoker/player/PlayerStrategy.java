@@ -17,6 +17,10 @@ public class PlayerStrategy {
     int doSomething(GameState gameState) {
         PlayerDto ourPlayer = gameState.getOurPlayer();
         if (gameState.isPreFlop()) {
+            if (ourPlayer.pocketCards().isPair()) {
+                var currentBuyIn = ourPlayer.getBet() + gameState.getMinimumRaise();
+                return Math.toIntExact(currentBuyIn + 20);
+            }
             int chenValue = ourPlayer.chenFormula();
             log.info("chen value: {}", chenValue);
             if (chenValue >= 8) {
@@ -32,11 +36,11 @@ public class PlayerStrategy {
                 return fold();
             }
         }
-//        new Thread(() -> {
-//            RankingService rankingService = new RankingService();
-//            int call = rankingService.call(allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards())));
-//            log.info("rank {}", call);
-//        }).start();
+        //        new Thread(() -> {
+        //            RankingService rankingService = new RankingService();
+        //            int call = rankingService.call(allCards(ourPlayer.pocketCardsAsList(), Arrays.asList(gameState.getCommunityCards())));
+        //            log.info("rank {}", call);
+        //        }).start();
 
         return bet(gameState, ourPlayer);
     }
