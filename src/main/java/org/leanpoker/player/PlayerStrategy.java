@@ -44,6 +44,9 @@ public class PlayerStrategy {
         if (doWeHaveThreeOfAKind(getRankCount(combinedCards))) {
             return Math.toIntExact(currentBuyIn + 200);
         }
+        if (doWeHaveTwoPair(getRankCount(combinedCards))) {
+            return Math.toIntExact(currentBuyIn + 150);
+        }
         // if we have 1 pair we increase our bet up to the maximum
         long bet = increaseBetIfWeGetPair(
                 ourPlayer.pocketCardsAsList(),
@@ -66,7 +69,7 @@ public class PlayerStrategy {
         System.err.println("PlayerStrategy.increaseBetIfWeGetPair, holeCards = " + holeCards + ", communityCards = " + communityCards);
         Map<String, Integer> rankCount = getRankCount(combinedCards);
         System.err.println("rankCounts = " + rankCount);
-        boolean isTherePairs = doWeHavePairs(rankCount);
+        boolean isTherePairs = doWeHaveOnePair(rankCount);
         // [{"K", "spades"},{"K", "clubs"}] => {"K": 2}
         // count the number of ranks has the rank
         // make the map where the rank is key
@@ -83,8 +86,12 @@ public class PlayerStrategy {
         return combinedCards;
     }
 
-    private boolean doWeHavePairs(Map<String, Integer> rankCount) {
+    private boolean doWeHaveOnePair(Map<String, Integer> rankCount) {
         return rankCount.values().stream().anyMatch(count -> count == 2);
+    }
+
+    private boolean doWeHaveTwoPair(Map<String, Integer> rankCount) {
+        return rankCount.values().stream().filter(count -> count == 2).count() == 2;
     }
 
     private boolean doWeHaveThreeOfAKind(Map<String, Integer> rankCount) {
